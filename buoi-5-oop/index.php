@@ -32,3 +32,5 @@ $product_model = new Product();
 // 1 .Lấy 1 bản ghi
 // 2.Tìm theo id
 // 3. Làm 1 số case special và eager loading
+
+//1 số case special và eager loading
