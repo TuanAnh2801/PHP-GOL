@@ -167,7 +167,34 @@ class Model{
         ];
         return $this;
         }
+public function test(){
+        $sqlCategory = "SELECT * FROM category";
+        $tmp = $this->pdo->prepare($sqlCategory);
+        $tmp->execute();
+        $category = $tmp->fetchAll(PDO::FETCH_OBJ);
 
+        $idCategory = [];
+        foreach ($category as $categories){
+            $idCategory[] = $categories->id;
+        }
+
+    $idCategory = implode(',',$idCategory);
+    $sqlProduct = "SELECT * FROM products WHERE category_id IN($idCategory)";
+    $stmp = $this->pdo->prepare($sqlProduct);
+    $stmp->execute();
+    $product  = $stmp->fetchAll(PDO::FETCH_OBJ);
+    $keyProduct = [];
+    foreach ($product as $products){
+        $key = $products->category_id;
+        $keyProduct[$key][]= $products;
+    }
+
+    foreach ($category as $categories){
+        $categories->product = $keyProduct[$categories->id];
+    }
+    echo '<pre>';
+    print_r($category);
+}
 
     public function connectDB(){
         $host = '127.0.0.1';
